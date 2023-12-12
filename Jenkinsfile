@@ -15,10 +15,10 @@ pipeline {
         }
         stage('Build Docker Image'){
             steps {
-                // script{
-                //     dockerImage = docker.build("${env.imagename}:v${env.BUILD_NUMBER}")
-                // }
-                sh """docker build . -t vincentstrife/capstone-create-update:v${env.BUILD_NUMBER}"""
+                script{
+                    dockerImage = docker.build("${env.imagename}:v${env.BUILD_NUMBER}")
+                }
+                // sh """docker build . -t vincentstrife/capstone-create-update:v${env.BUILD_NUMBER}"""
             }
         }
         // stage('Push Built Image to Docker Hub'){
