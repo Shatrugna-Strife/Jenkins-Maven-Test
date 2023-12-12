@@ -37,6 +37,7 @@ pipeline {
                 sh "docker rmi $imagename:latest"
             }
         }
+        
         // stage('SSH create tmp folder at ~ location'){
         //     steps{
         //         sh 'ssh -o StrictHostKeyChecking=no $devSystemAddress "mkdir -p ~/tmp"'
