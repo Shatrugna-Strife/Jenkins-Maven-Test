@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        //imagename = "vincentstrife/capstone-create-update"
-        //registryCredential = "dockerVincentStrifeCred"
+        imagename = "vincentstrife/spring-demo"
+        registryCredential = "shatruDockerRegistry"
         dockerImage = ''
         //devSystemAddress="devops@192.168.1.45"
         statusLoop=''
@@ -21,22 +21,22 @@ pipeline {
                 // sh """docker build . -t vincentstrife/capstone-create-update:v${env.BUILD_NUMBER}"""
             }
         }
-        // stage('Push Built Image to Docker Hub'){
-        //     steps{
-        //         script{
-        //             docker.withRegistry('', registryCredential) {
-        //                 dockerImage.push()
-        //                 dockerImage.push('latest')
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Remove Unused docker image') {
-        //     steps{
-        //         sh "docker rmi $imagename:v$BUILD_NUMBER"
-        //         sh "docker rmi $imagename:latest"
-        //     }
-        // }
+        stage('Push Built Image to Docker Hub'){
+            steps{
+                script{
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                        dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+        stage('Remove Unused docker image') {
+            steps{
+                sh "docker rmi $imagename:v$BUILD_NUMBER"
+                sh "docker rmi $imagename:latest"
+            }
+        }
         // stage('SSH create tmp folder at ~ location'){
         //     steps{
         //         sh 'ssh -o StrictHostKeyChecking=no $devSystemAddress "mkdir -p ~/tmp"'
